@@ -1,6 +1,8 @@
 <h1>Graphics Processing</h1>
 Este repositório contém implementações para atividades acadêmicas relacionadas ao processamento gráfico. Os exemplos a seguir demonstram diferentes conceitos utilizando OpenGL e GLFW.
 
+<h2>Exercícios M2</h2>
+
 <h3>ex1.cpp</h3>
 
 Descrição: Este exemplo cria uma janela OpenGL que apresenta um único triângulo renderizado na tela. Ele demonstra o uso básico de shaders (vertex e fragment shaders) para aplicar uma cor ao triângulo e manipulá-lo usando transformações de projeção e modelo.
