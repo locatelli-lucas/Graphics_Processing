@@ -31,3 +31,7 @@ Escolha aleatória de cores para os triângulos.
 Uso de callbacks para capturar eventos do teclado e mouse.
 Exemplo de manipulação de transformações (translação, rotação, escala) em triângulos individuais.
 Localização: src/M2/ex3/ex3.cpp
+
+<h3>Vivencial<h3>
+
+Descrição: Este desafio contém uma lógica na qual, ao clicar três vezes na tela, um triângulo de cor aleatória é renderizdo na tela, e assim consecutivamente.
