@@ -35,3 +35,16 @@ Localização: src/M2/ex3/ex3.cpp
 <h3>Vivencial<h3>
 
 Descrição: Este desafio contém uma lógica na qual, ao clicar três vezes na tela, um triângulo de cor aleatória é renderizdo na tela, e assim consecutivamente.
+
+<h3>Jogo das Cores</h3>
+
+Descrição: O usuário deve clicar em um quadrado da grade para escolher uma cor de referência. Todos os quadrados com cor semelhante à escolhida, dentro de um limite de similaridade pré-definido, são removidos da tela e somam pontos ao jogador. A cada tentativa, a pontuação máxima diminui. O jogo pode ser reiniciado a qualquer momento pressionando a tecla R. O objetivo é remover todos os quadrados com o maior número de pontos possível.
+Principais Funcionalidades:
+- Grade de quadrados coloridos gerados aleatoriamente.
+- Seleção de cor por clique do mouse.
+- Remoção automática de quadrados com cor semelhante à escolhida.
+- Sistema de pontuação: pontos por acerto, penalidade por erro, decremento a cada tentativa.
+- Reinício do jogo com a tecla R.
+- Exibição da pontuação final ao término do jogo.
+Localização: src/M3/JogoCores.cpp
+
