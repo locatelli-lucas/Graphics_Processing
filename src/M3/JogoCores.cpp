@@ -2,6 +2,8 @@
 #include <string>
 #include <assert.h>
 #include <vector>
+#include <ctime>
+#include <cmath>
 
 using namespace std;
 
@@ -17,11 +19,12 @@ using namespace glm;
 #include <cmath>
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 
 GLuint createQuad();
 int setupShader();
 int setupGeometry();
+void whipeQuads(vec3 color);
 
 const GLuint WIDTH = 800, HEIGHT = 600;
 const GLuint QUAD_WIDTH = 100, QUAD_HEIGHT = 100;
@@ -54,14 +57,14 @@ struct Quad
 	vec3 position;
 	vec3 dimensions;
 	vec3 color;
+	bool whiped;
 };
 
-vector <vec3> colors;
-int iColor = 0;
+Quad grid[ROWS][COLS];
 
 int main()
 {
-	srand(glfwGetTime());
+	srand(time(NULL));
 
 	glfwInit();
 
@@ -87,6 +90,8 @@ int main()
 
 	GLuint shaderID = setupShader();
 
+	GLuint quadVAO = createQuad();
+
 	glUseProgram(shaderID);
 
 	GLint colorLoc = glGetUniformLocation(shaderID, "inputColor");
@@ -94,52 +99,71 @@ int main()
 	mat4 projection = ortho(0.0, 800.0, 600.0, 0.0, -1.0, 1.0);
 	glUniformMatrix4fv(glGetUniformLocation(shaderID, "projection"), 1, GL_FALSE, value_ptr(projection));
 
-	Quad grid[ROWS][COLS];
-	for(int i = 0; i < ROWS; i++) {
-	    for (int j = 0; j < COLS; j++) {
-	        Quad quad;
-	        quad.position = vec3(j * QUAD_WIDTH, i * QUAD_HEIGHT, 0.0);
-	        quad.dimensions = vec3(QUAD_WIDTH, QUAD_HEIGHT, 1.0);
-	        quad.color = vec3(rand() % 256 / 255.0, rand() % 256 / 255.0, rand() % 256 / 255.0);
-	        grid[i][j] = quad;
-	    }
+	for (int i = 0; i < ROWS; i++)
+	{
+		for (int j = 0; j < COLS; j++)
+		{
+			Quad quad;
+			vec2 ini_pos = vec2(QUAD_WIDTH / 2, QUAD_HEIGHT / 2);
+			quad.position = vec3(ini_pos.x + j * QUAD_WIDTH, ini_pos.y + i * QUAD_HEIGHT, 0.0);
+			quad.dimensions = vec3(QUAD_WIDTH, QUAD_HEIGHT, 1.0);
+			quad.color = vec3(rand() % 256 / 255.0, rand() % 256 / 255.0, rand() % 256 / 255.0);
+			quad.whiped = false;
+			grid[i][j] = quad;
+		}
 	}
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
-
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
 		glLineWidth(10);
 		glPointSize(20);
 
+		glBindVertexArray(quadVAO);
+		for (int i = 0; i < ROWS; i++)
+		{
+			for (int j = 0; j < COLS; j++)
+			{
+				if (!grid[i][j].whiped)
+				{
+					mat4 model = mat4(1);
+					model = translate(model, grid[i][j].position);
+					model = scale(model, grid[i][j].dimensions);
+					glUniformMatrix4fv(glGetUniformLocation(shaderID, "model"), 1, GL_FALSE, value_ptr(model));
+					glUniform4f(colorLoc,
+								grid[i][j].color.r,
+								grid[i][j].color.g,
+								grid[i][j].color.b,
+								1.0f);
+				}
 
-		glBindVertexArray(createQuad());
-
-		for (int i = 0; i < ROWS; i++) {
-            for(int j = 0; j < COLS; j++) {
-                mat4 model = mat4(1);
-                model = translate(model, grid[i][j].position);
-                model = scale(model, grid[i][j].dimensions);
-                glUniformMatrix4fv(glGetUniformLocation(shaderID, "model"), 1, GL_FALSE, value_ptr(model));
-
-				glUniform4f(colorLoc, 
-					grid[i][j].color.r, 
-					grid[i][j].color.g, 
-					grid[i][j].color.b,
-					1.0f);
 				glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 			}
 		}
-
 		glBindVertexArray(0);
 
 		glfwSwapBuffers(window);
 	}
 	glfwTerminate();
 	return 0;
+}
+
+void whipeQuads(vec3 color)
+{
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS; j++) {
+			if (!grid[i][j].whiped) {
+				double d = sqrt(pow(color.r - grid[i][j].color.r, 2) +
+								pow(color.g - grid[i][j].color.g, 2) +
+								pow(color.b - grid[i][j].color.b, 2));
+
+				if (d < 0.3)
+					grid[i][j].whiped = true;
+			}
+		}
+	}
 }
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode)
@@ -189,13 +213,15 @@ int setupShader()
 	return shaderProgram;
 }
 
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-    {
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	{
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
-		cout << xpos << "  " << ypos << endl;	
+		cout << xpos << "  " << ypos << " ----- ";
+		cout << xpos << "  " << ypos << endl;
+		whipeQuads(grid[(int)(ypos / QUAD_HEIGHT)][(int)(xpos / QUAD_WIDTH)].color);
 	}
 }
 
@@ -203,12 +229,11 @@ GLuint createQuad()
 {
 	GLuint VAO;
 
-    GLfloat vertices[] = {
-		0.0f, 0.0f, 0.0f,
-        0.0f, 100.0f, 0.0f,
-        100.0f, 0.0f, 0.0f,
-        100.0f,100.0f, 0.0f
-	};
+	GLfloat vertices[] = {
+		-0.5, 0.5, 0.0,
+		-0.5, -0.5, 0.0,
+		0.5, 0.5, 0.0,
+		0.5, -0.5, 0.0};
 
 	GLuint VBO;
 	glGenBuffers(1, &VBO);
@@ -221,7 +246,6 @@ GLuint createQuad()
 	glEnableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
 	glBindVertexArray(0);
 
 	return VAO;
