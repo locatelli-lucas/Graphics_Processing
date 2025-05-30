@@ -45,6 +45,9 @@ include_directories(${glm_SOURCE_DIR})
 set(EXERCISES
     M2/ex1.cpp
     M2/ex2.cpp
+    M2/ex3.cpp
+    M3/JogoCores.cpp
+    M4/ObjetosTexturizados.cpp
 )
 
 add_compile_options(-Wno-pragmas)
