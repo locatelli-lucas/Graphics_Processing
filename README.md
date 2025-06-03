@@ -48,3 +48,16 @@ Principais Funcionalidades:
 - Exibição da pontuação final ao término do jogo.
 Localização: src/M3/JogoCores.cpp
 
+<h3>ObjetosTexturizados.cpp</h3>
+
+Descrição: Demonstra o uso de sprites e texturas em OpenGL, incluindo carregamento de imagens, aplicação de texturas em objetos, manipulação de múltiplos sprites e fundo, além de blending para transparência. O fundo é uma imagem que ocupa toda a tela, enquanto os sprites de personagens são desenhados alinhados e com tamanho padronizado. O exemplo também mostra movimentação de um sprite controlado pelo teclado.
+
+Principais Funcionalidades:
+- Carregamento de múltiplas texturas (fundo e sprites).
+- Renderização de um fundo texturizado ocupando toda a janela.
+- Renderização de vários sprites (personagens) alinhados e com o mesmo tamanho.
+- Sprite do jogador controlado pelo teclado (movimento horizontal).
+- Uso de blending para sprites com transparência.
+- Exemplo de matriz de modelo para posicionamento e escala dos sprites.
+
+Localização: src/M4/ObjetosTexturizados.cpp
