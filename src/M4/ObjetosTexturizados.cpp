@@ -1,218 +1,236 @@
 #include <iostream>
 #include <string>
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <glad/glad.h>
-
-#include <GLFW/glfw3.h>
-
+#include <assert.h>
+#include <cmath>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
+using namespace std;
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
-#include <GL/glext.h>
 
-const GLint WIDTH = 800, HEIGHT = 600;
-glm::mat4 matrix = glm::mat4(1);
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
+int setupShader();
+int setupSprite();
+int loadTexture(string filePath);
 
-bool load_texture (const char* file_name, GLuint* tex) {
-    int x, y, n;
-    int force_channels = 4;
-    glEnable(GL_TEXTURE_2D);
-    unsigned char* image_data = stbi_load (file_name, &x, &y, &n, force_channels);
-    if (!image_data) {
-        fprintf (stderr, "ERROR: could not load %s\n", file_name);
-        return false;
-    }
-    // NPOT check
-    if ((x & (x - 1)) != 0 || (y & (y - 1)) != 0) {
-        fprintf (
-                 stderr, "WARNING: texture %s is not power-of-2 dimensions\n", file_name
-                 );
-    }
-//    int width_in_bytes = x * 4;
-//    unsigned char *top = NULL;
-//    unsigned char *bottom = NULL;
-//    unsigned char temp = 0;
-//    int half_height = y / 2;
-//    for (int row = 0; row < half_height; row++) {
-//        top = image_data + row * width_in_bytes;
-//        bottom = image_data + (y - row - 1) * width_in_bytes;
-//        for (int col = 0; col < width_in_bytes; col++) {
-//            temp = *top;
-//            *top = *bottom;
-//            *bottom = temp;
-//            top++;
-//            bottom++;
-//        }
-//    }
-    
-    glGenTextures (1, tex);
-    glActiveTexture (GL_TEXTURE0);
-    glBindTexture (GL_TEXTURE_2D, *tex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
-    glGenerateMipmap (GL_TEXTURE_2D);
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    
-    GLfloat max_aniso = 0.0f;
-    glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_aniso);
-    // set the maximum!
-    glTexParameterf (GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, max_aniso);
-    return true;
-}
+const GLuint WIDTH = 800, HEIGHT = 600;
 
-void mouse(double mx, double my) {
-    double dx = mx - WIDTH / 2;
-    double dy = my - HEIGHT / 2;
-    
-    matrix = glm::translate(glm::mat4(1), glm::vec3(dx, dy, 0));
-}
+const GLchar *vertexShaderSource = R"(
+ #version 400
+ layout (location = 0) in vec3 position;
+ layout (location = 1) in vec2 texc;
+ uniform mat4 model;
+ uniform mat4 projection;
+ out vec2 tex_coord;
+ void main()
+ {
+    tex_coord = vec2(texc.s, texc.t);
+    gl_Position = projection * model * vec4(position, 1.0);
+ }
+ )";
 
-int main() {
-    
-    glfwInit();
-    glfwWindowHint (GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint (GLFW_CONTEXT_VERSION_MINOR, 0);
-    glfwWindowHint (GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-    glfwWindowHint(GLFW_SAMPLES, 4);
-    
-    #pragma region Basic Setup
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "ORTHO + MOUSE + TEXTURE", nullptr, nullptr);
-    
-    if (window == nullptr) {
-        std::cout << "Failed to create GLFW Window" << std::endl;
-        glfwTerminate();
-        return EXIT_FAILURE;
-    }
-    
-    glfwMakeContextCurrent(window);
-    
-    // GLAD: carrega todos os ponteiros d funções da OpenGL
+const GLchar *fragmentShaderSource = R"(
+ #version 400
+ in vec2 tex_coord;
+ out vec4 color;
+ uniform sampler2D tex_buff;
+ void main()
+ {
+	 color = texture(tex_buff,tex_coord);
+ }
+ )";
+
+GLuint bgTex[5];
+float parallax[6] = {1.0f, 0.8f, 0.6f, 0.4f, 0.2f, 0.1f};
+float playerX = 50.0f, playerY = 470.0f;
+float speed = 8.0f;
+glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
+
+int main()
+{
+	glfwInit();
+	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Módulo 4 - Sprites", nullptr, nullptr);
+	if (!window)
+	{
+		std::cerr << "Falha ao criar a janela GLFW" << std::endl;
+		glfwTerminate();
+		return -1;
+	}
+	glfwMakeContextCurrent(window);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cerr << "Falha ao inicializar GLAD" << std::endl;
 		return -1;
 	}
-    
-#pragma endregion
-    
-    const char* vertex_shader =
-        "#version 400\n"
-        "layout ( location = 0 ) in vec3 vPosition;"
-        "layout ( location = 1 ) in vec3 vColor;"
-        "layout ( location = 2 ) in vec2 vTexture;"
-        "uniform mat4 proj;"
-        "uniform mat4 matrix;"
-        "out vec2 text_map;"
-        "out vec3 color;"
-        "void main() {"
-        "    color = vColor;"
-        "    text_map = vTexture;"
-        "    gl_Position = proj * matrix * vec4 ( vPosition, 1.0);"
-        "}";
-    
-    const char* fragment_shader =
-        "#version 400\n"
-        "in vec2 text_map;"
-        "in vec3 color;"
-        "uniform sampler2D basic_texture;"
-        "out vec4 frag_color;"
-        "void main(){"
-        "   frag_color = texture(basic_texture, text_map);"
-        "}";
-    
-    int vs = glCreateShader (GL_VERTEX_SHADER);
-    glShaderSource (vs, 1, &vertex_shader, NULL);
-    glCompileShader (vs);
-    int fs = glCreateShader (GL_FRAGMENT_SHADER);
-    glShaderSource (fs, 1, &fragment_shader, NULL);
-    glCompileShader (fs);
-    
-    int shader_programme = glCreateProgram ();
-    glAttachShader (shader_programme, fs);
-    glAttachShader (shader_programme, vs);
-    glLinkProgram (shader_programme);
-    
-    GLfloat vertices[] = {
-        // Positions                              // Colors           // texture map
-        WIDTH * 0.35f, HEIGHT * 0.65f, +0.0f,     0.0f, 0.0f, 1.0f,   0.0f, 1.0f, // Top-left
-        WIDTH * 0.65f, HEIGHT * 0.65f, +0.0f,     0.0f, 1.0f, 0.0f,   1.0f, 1.0f, // Top-right
-        WIDTH * 0.65f, HEIGHT * 0.35f, +0.0f,     1.0f, 0.0f, 0.0f,   1.0f, 0.0f, // Bottom-right
+	const GLubyte *renderer = glGetString(GL_RENDERER);
+	const GLubyte *version = glGetString(GL_VERSION);
+	cout << "Renderer: " << renderer << endl;
+	cout << "OpenGL version supported " << version << endl;
+	int width, height;
+	glfwGetFramebufferSize(window, &width, &height);
+	glViewport(0, 0, width, height);
+	GLuint shaderID = setupShader();
+	GLuint VAO = setupSprite();
+    bgTex[0] = loadTexture("assets/postapocalypse3.png");
+    bgTex[1] = loadTexture("assets/Dead.png");
+    bgTex[2] = loadTexture("assets/Idle.png");
+    bgTex[3] = loadTexture("assets/Jump.png");
+    bgTex[4] = loadTexture("assets/Run.png");
+	GLuint playerTex = loadTexture("assets/Aim.png");
+	glUseProgram(shaderID);
+	GLint modelLoc = glGetUniformLocation(shaderID, "model");
+	GLint projLoc = glGetUniformLocation(shaderID, "projection");
+	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+	double prev_s = glfwGetTime();
+	double title_countdown_s = 0.1;
+	float colorValue = 0.0;
+	glActiveTexture(GL_TEXTURE0);
+	glUniform1i(glGetUniformLocation(shaderID, "tex_buff"), 0);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_ALWAYS);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	while (!glfwWindowShouldClose(window))
+	{
+		{
+			double curr_s = glfwGetTime();
+			double elapsed_s = curr_s - prev_s;
+			prev_s = curr_s;
+			title_countdown_s -= elapsed_s;
+			if (title_countdown_s <= 0.0 && elapsed_s > 0.0)
+			{
+				double fps = 1.0 / elapsed_s;
+				char tmp[256];
+				sprintf(tmp, "FPS %.2lf", fps);
+				glfwSetWindowTitle(window, tmp);
+				title_countdown_s = 0.1;
+			}
+		}
+		glfwPollEvents();
+		glClearColor(0.5f, 0.7f, 1.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glBindVertexArray(VAO);
+        glBindTexture(GL_TEXTURE_2D, bgTex[0]);
+        glm::mat4 model = glm::scale(glm::mat4(1.0f), glm::vec3(800.0f, 600.0f, 1.0f));
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-        WIDTH * 0.35f, HEIGHT * 0.65f, +0.0f,     0.0f, 0.0f, 1.0f,   0.0f, 1.0f, // Top-left
-        WIDTH * 0.65f, HEIGHT * 0.35f, +0.0f,     1.0f, 0.0f, 0.0f,   1.0f, 0.0f, // Bottom-right
-        WIDTH * 0.35f, HEIGHT * 0.35f, +0.0f,     0.0f, 1.0f, 1.0f,   0.0f, 0.0f, // Bottom-left
-    };
-
-    glm::mat4 proj = glm::ortho(0.0f, (float)WIDTH, (float)HEIGHT, 0.0f, -1.0f, 1.0f);
-    
-    
-    GLuint VAO, VBO;
-    glGenVertexArrays( 1, &VAO );
-    glGenBuffers( 1, &VBO );
-    glBindVertexArray( VAO );
-    glBindBuffer( GL_ARRAY_BUFFER, VBO);
-    glBufferData( GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW );
-    glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), ( GLvoid * ) 0 );
-    glEnableVertexAttribArray( 0 );
-    glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), (GLvoid *)(3*sizeof(float)) );
-    glEnableVertexAttribArray( 1 );
-    glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), (GLvoid *)(6*sizeof(float)) );
-    glEnableVertexAttribArray( 2 );
-
-    glBindVertexArray( 0 );
-
-    GLuint tex;
-    load_texture ("postapocalypse3.png", &tex);
-
-    
-    while (!glfwWindowShouldClose(window)) {
-        glfwPollEvents();
-        
-        const int state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
-        if (state == GLFW_PRESS) {
-            double mx, my;
-            glfwGetCursorPos(window, &mx, &my);
-            mouse(mx, my);
+        for (int i = 1; i < 5; i++)
+        {
+            glBindTexture(GL_TEXTURE_2D, bgTex[i]);
+            float spriteX = 80.0f + (i-1) * 140.0f;
+            float spriteY = 470.0f;
+            glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(spriteX, spriteY, 0.0f));
+            model = glm::scale(model, glm::vec3(128.0f, 128.0f, 1.0f));
+            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         }
+		glBindTexture(GL_TEXTURE_2D, playerTex);
+		model = glm::translate(glm::mat4(1.0f), glm::vec3(playerX, playerY, 0.0f));
+		model = glm::scale(model, glm::vec3(128.0f, 128.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glfwSwapBuffers(window);
+	}
+	glDeleteVertexArrays(1, &VAO);
+	glfwTerminate();
+	return 0;
+}
 
-#pragma region Input Handling
-        
-        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-            glfwSetWindowShouldClose(window, GLFW_TRUE);
-        }
-#pragma endregion
-        
-        glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
-        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-        
-        int screenWidth, screenHeight;
-        glfwGetWindowSize(window, &screenWidth, &screenHeight);
-        glViewport(0, 0, screenWidth, screenHeight);
-        
-        glUseProgram (shader_programme);
-        glUniformMatrix4fv(glGetUniformLocation(shader_programme, "proj"), 1, GL_FALSE, glm::value_ptr(proj));
-        glUniformMatrix4fv(glGetUniformLocation(shader_programme, "matrix"), 1, GL_FALSE, glm::value_ptr(matrix));
+int setupShader()
+{
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+	glCompileShader(vertexShader);
+	GLint success;
+	GLchar infoLog[512];
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
+				  << infoLog << std::endl;
+	}
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+	glCompileShader(fragmentShader);
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"
+				  << infoLog << std::endl;
+	}
+	GLuint shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
+				  << infoLog << std::endl;
+	}
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+	return shaderProgram;
+}
 
-        glBindVertexArray( VAO );
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, tex);
-        glUniform1i(glGetUniformLocation(shader_programme, "basic_texture"), 0);
-        glDrawArrays( GL_TRIANGLES, 0, 6);
-        glBindVertexArray( 0 );
-        
-        glfwSwapBuffers(window);
-    }
-    
-    glfwTerminate();
-    
-    return EXIT_SUCCESS;
+int setupSprite()
+{
+	GLfloat vertices[] = {
+		0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+		1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f, 0.0f
+	};
+	GLuint VBO, VAO;
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	return VAO;
+}
+
+int loadTexture(string filePath)
+{
+	GLuint texID;
+	glGenTextures(1, &texID);
+	glBindTexture(GL_TEXTURE_2D, texID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	int width, height, nrChannels;
+	unsigned char *data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0);
+	if (data)
+	{
+		if (nrChannels == 3)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		}
+		else
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		}
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(data);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	return texID;
 }
