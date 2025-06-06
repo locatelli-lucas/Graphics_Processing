@@ -48,6 +48,7 @@ set(EXERCISES
     M2/ex3.cpp
     M3/JogoCores.cpp
     M4/ObjetosTexturizados.cpp
+    M5/SpriteAnimado.cpp
 )
 
 add_compile_options(-Wno-pragmas)
