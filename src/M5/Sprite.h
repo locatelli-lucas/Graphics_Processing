@@ -1,19 +1,20 @@
-#pragma once
-#include <glad/glad.h>
+#ifndef SPRITE_H
+#define SPRITE_H
+
+#include <GL/glew.h>
+#include <string>
 
 class Sprite {
-    public:
-        Sprite(const char* imagePath, float x, float y, float width, float height);
-        ~Sprite();
+public:
+    Sprite(const std::string& imagePath);
+    ~Sprite();
 
-        void draw();
-        void setPosition(float newX, float newY);
-        void setSize(float newWidth, float newHeight);
-        void handleInput(GLFWwindow* window);
+    void draw(float x, float y);
+private:
+    GLuint textureID;
+    int width, height, nrChannels;
 
-    private:
-        float x, y;
-        float width, height;
-        int imgWidth, imgHeight;
-        GLuint textureID;
+    void loadTexture(const std::string& imagePath);
 };
+
+#endif

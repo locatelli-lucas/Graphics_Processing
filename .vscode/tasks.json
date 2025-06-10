@@ -1,18 +1,18 @@
 {
     "tasks": [
         {
-            "type": "cppbuild",
-            "label": "C/C++: g++.exe build active file",
-            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+            "type": "shell",
+            "label": "Build SpriteAnimado com Sprite.cpp (correto)",
+            "command": "C:/msys64/ucrt64/bin/g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "${workspaceFolder}/src/M5/SpriteAnimado.cpp",
+                "${workspaceFolder}/src/M5/Sprite.cpp",
                 "${workspaceFolder}/common/glad.c",
                 "${workspaceFolder}/common/gl_utils.cpp",
-                "${workspaceFolder}/common/gl_utils.h",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${workspaceFolder}/src/M5/SpriteAnimado.exe",
                 "-I${workspaceFolder}/include",
                 "-I${workspaceFolder}/build/_deps/glfw-src/include",
                 "-I${workspaceFolder}/build/_deps/glm-src",
@@ -23,8 +23,25 @@
                 "-lopengl32",
                 "-mconsole"
             ],
+            "group": "build",
+            "isBackground": false,
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe build active file",
+            "command": "C:/msys64/ucrt64/bin/g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "C:/msys64/ucrt64/bin"
             },
             "problemMatcher": [
                 "$gcc"

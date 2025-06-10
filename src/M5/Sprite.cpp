@@ -1,66 +1,44 @@
 #include "Sprite.h"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <stb_image.h>
+#include "stb_image.h"
 #include <iostream>
 
-Sprite::Sprite(const char* imagePath, float x, float y, float width, float height)
-    : x(x), y(y), width(width), height(height), textureID(0) {
-    // Carrega a textura usando stb_image
-    int nrChannels;
-    unsigned char* data = stbi_load(imagePath, &imgWidth, &imgHeight, &nrChannels, 0);
-    if (data) {
-        glGenTextures(1, &textureID);
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB;
-        glTexImage2D(GL_TEXTURE_2D, 0, format, imgWidth, imgHeight, 0, format, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-        stbi_image_free(data);
-    } else {
-        std::cerr << "Falha ao carregar imagem: " << imagePath << std::endl;
-    }
+Sprite::Sprite(const std::string& imagePath) {
+    loadTexture(imagePath);
 }
 
 Sprite::~Sprite() {
-    if (textureID) {
-        glDeleteTextures(1, &textureID);
-    }
+    glDeleteTextures(1, &textureID);
 }
 
-void Sprite::draw() {
-    // Aqui você implementaria o desenho do sprite usando OpenGL
-    // (bind da textura, configuração de vértices, etc.)
-    // Este é um placeholder
+void Sprite::loadTexture(const std::string& imagePath) {
+    glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_2D, textureID);
-    // ... código para desenhar um quad/textura ...
+
+    int width, height, nrChannels;
+    unsigned char* data = stbi_load(imagePath.c_str(), &width, &height, &nrChannels, 4);
+    if (data) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    } else {
+        std::cerr << "Falha ao carregar textura: " << imagePath << std::endl;
+    }
+    stbi_image_free(data);
 }
 
-void Sprite::setPosition(float newX, float newY) {
-    x = newX;
-    y = newY;
+void Sprite::draw(float x, float y) {
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    
+    glBegin(GL_QUADS);
+    glTexCoord2f(0, 1); glVertex2f(x, y);
+    glTexCoord2f(1, 1); glVertex2f(x + 100, y);
+    glTexCoord2f(1, 0); glVertex2f(x + 100, y + 100);
+    glTexCoord2f(0, 0); glVertex2f(x, y + 100);
+    glEnd();
+
+    glDisable(GL_TEXTURE_2D);
 }
 
-void Sprite::setSize(float newWidth, float newHeight) {
-    width = newWidth;
-    height = newHeight;
-}
-
-void Sprite::handleInput(GLFWwindow* window) {
-    float speed = 8.0f;
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        x -= speed;
-    }
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        x += speed;
-    }
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        y += speed;
-    }
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        y -= speed;
-    }
-}
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
