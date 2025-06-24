@@ -1,29 +1,33 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <string>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+// --- INCLUDE AND LIBRARY DEFINITIONS ---
+#include <iostream> // Entrada e saída padrão
+#include <vector>   // Vetores dinâmicos
+#include <cmath>    // Funções matemáticas
+#include <string>   // Manipulação de strings
+#include <glad/glad.h> // OpenGL loader
+#include <GLFW/glfw3.h> // Janela e contexto OpenGL
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
-#include <glm/glm.hpp>
+#include <stb_image.h> // Carregamento de imagens
+#include <glm/glm.hpp> // Biblioteca de álgebra linear
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <fstream>
-#include <sstream>
-#include <algorithm>
-#include <chrono>
+#include <fstream>   // Leitura de arquivos
+#include <sstream>   // Manipulação de strings
+#include <algorithm> // Funções utilitárias
+#include <chrono>    // Medição de tempo
 
+// --- ESTRUTURA DE TILE ---
 struct TileInfo { int tileIndex; bool hasCoin; };
 
+// --- CONSTANTES DE TELA E TILE ---
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 const int TILE_WIDTH = 64;
 const int TILE_HEIGHT = 32;
 
-int playerX = 1, playerY = 1;
-int mapRows = 0, mapCols = 0;
-int coinCount = 0, totalCoins = 0;
+// --- VARIÁVEIS DE ESTADO DO JOGO ---
+int playerX = 1, playerY = 1; // Posição do jogador
+int mapRows = 0, mapCols = 0; // Tamanho do mapa
+int coinCount = 0, totalCoins = 0; // Contador de moedas
 double startTime = 0;
 int coinFrame = 0, playerIdleFrame = 0;
 double coinAnimTimer = 0, playerIdleTimer = 0;
@@ -72,8 +76,9 @@ GLuint createShaderProgram() {
     return program;
 }
 
-// --- MAP LOADING FUNCTION ---
+// --- FUNÇÃO DE CARREGAMENTO DO MAPA ---
 void loadMapFromFile(const std::string& path) {
+    // Lê o arquivo de mapa e preenche a matriz de tiles
     std::ifstream file(path);
     if (!file) {
         std::cerr << "Erro ao abrir " << path << std::endl;
@@ -108,7 +113,9 @@ void loadMapFromFile(const std::string& path) {
     }
 }
 
+// --- FUNÇÃO DE CARREGAMENTO DA TEXTURA DO TILESET ---
 void loadTileset(const std::string& path) {
+    // Carrega a imagem do tileset e cria a textura OpenGL
     glGenTextures(1, &tilesetTexture);
     glBindTexture(GL_TEXTURE_2D, tilesetTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);  
@@ -125,8 +132,9 @@ void loadTileset(const std::string& path) {
     }
 }
 
-// --- PLAYER TEXTURE LOADING ---
+// --- FUNÇÃO DE CARREGAMENTO DA TEXTURA DO JOGADOR ---
 void loadPlayerTexture(const std::string& path) {
+    // Carrega a imagem do personagem e aplica pré-processamento de alpha
     glGenTextures(1, &playerTexture);
     glBindTexture(GL_TEXTURE_2D, playerTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -159,7 +167,9 @@ void loadPlayerTexture(const std::string& path) {
     }
 }
 
+// --- FUNÇÃO DE CARREGAMENTO DAS TEXTURAS DAS MOEDAS ---
 void loadCoinTextures() {
+    // Carrega as imagens de animação das moedas
     char buf[128];
     for (int i = 0; i < 10; ++i) {
         sprintf(buf, "./assets/sprites/Bronze_%d.png", i+21);
@@ -180,8 +190,9 @@ void loadCoinTextures() {
     }
 }
 
-// --- PLAYER IDLE ANIMATION TEXTURE LOADING ---
+// --- FUNÇÃO DE CARREGAMENTO DA TEXTURA DE IDLE DO JOGADOR ---
 void loadPlayerIdleTexture() {
+    // Carrega a animação de idle do personagem
     glGenTextures(1, &playerIdleTexture);
     glBindTexture(GL_TEXTURE_2D, playerIdleTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -198,8 +209,9 @@ void loadPlayerIdleTexture() {
     }
 }
 
-// --- OPENGL BUFFER INITIALIZATION ---
+// --- INICIALIZAÇÃO DOS BUFFERS OPENGL ---
 void initBuffers() {
+    // Cria VAO e VBO para os vértices dos tiles/sprites
     float vertices[] = {
         0.0f, 0.0f, 0.0f, 1.0f,
         0.0f, 1.0f, 0.0f, 0.0f,
@@ -218,8 +230,9 @@ void initBuffers() {
     glEnableVertexAttribArray(1);
 }
 
-// --- TILE DRAWING FUNCTION ---
+// --- FUNÇÃO DE DESENHO DE TILE ---
 void drawTile(int tileIndex, int i, int j, glm::mat4 projection, bool darken = false) {
+    // Desenha um tile na posição (i, j) com possível escurecimento
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, tilesetTexture);
     glUniform1i(glGetUniformLocation(shaderProgram, "tileset"), 0);
@@ -253,8 +266,9 @@ void drawTile(int tileIndex, int i, int j, glm::mat4 projection, bool darken = f
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
 }
 
-// --- COIN DRAWING FUNCTION ---
+// --- FUNÇÃO DE DESENHO DE MOEDA ---
 void drawCoin(int i, int j, glm::mat4 projection) {
+    // Desenha uma moeda animada na posição (i, j)
     int winWidth, winHeight;
     glfwGetFramebufferSize(glfwGetCurrentContext(), &winWidth, &winHeight);
     float mapHeight = (mapRows + mapCols) * (TILE_HEIGHT / 2.0f);
@@ -286,8 +300,9 @@ void drawCoin(int i, int j, glm::mat4 projection) {
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }
 
-// --- GAME RESET FUNCTION ---
+// --- FUNÇÃO DE RESET DO JOGO ---
 void resetGame() {
+    // Reinicia o estado do jogo, reposiciona o jogador e conta as moedas
     loadMapFromFile("./assets/map.txt");
     playerX     = (int)std::floor(mapCols / 2.0);
     playerY     = (int)std::floor(mapRows / 2.0);
@@ -302,8 +317,9 @@ void resetGame() {
     startTime = glfwGetTime();
 }
 
-// --- INPUT PROCESSING FUNCTION ---
+// --- FUNÇÃO DE PROCESSAMENTO DE INPUT ---
 void processInput(GLFWwindow* window) {
+    // Processa teclas de movimento e reinício
     static double lastMove  = 0;
     double now              = glfwGetTime();
     if (gameState != RUNNING) {
@@ -347,8 +363,9 @@ void processInput(GLFWwindow* window) {
     }
 }
 
-// --- PLAYER DRAWING FUNCTION ---
+// --- FUNÇÃO DE DESENHO DO JOGADOR ---
 void drawPlayer(int i, int j, glm::mat4 projection) {
+    // Desenha o sprite animado do jogador na posição (i, j)
     int winWidth, winHeight;
     glfwGetFramebufferSize(glfwGetCurrentContext(), &winWidth, &winHeight);
     float mapHeight = (mapRows + mapCols) * (TILE_HEIGHT / 2.0f);
@@ -383,8 +400,9 @@ void drawPlayer(int i, int j, glm::mat4 projection) {
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }
 
-// --- MAIN GAME LOOP ---
+// --- LOOP PRINCIPAL DO JOGO ---
 int main() {
+    // Inicializa GLFW, OpenGL, carrega recursos e executa o loop principal
     glfwInit();
     GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Tilemap Isometrico", NULL, NULL);
     glfwMakeContextCurrent(window);
