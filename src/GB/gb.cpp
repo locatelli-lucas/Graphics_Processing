@@ -81,7 +81,7 @@ void loadMap(const std::string& path) {
     // Lê o arquivo de mapa e preenche a matriz de tiles
     std::ifstream file(path);
     if (!file) {
-        std::cerr << "Erro ao abrir " << path << std::endl;
+        std::cerr << "Erro ao abrir map " << path << std::endl;
         return;
     }
     std::string line;
@@ -325,8 +325,8 @@ void processInput(GLFWwindow* window) {
     if (playState != RUNNING) {
         if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
             resetGame();
-            printf("--- Jogo iniciado! ---\n");
-            printf("Colete todas as moedas, sem pisar na lava!\n");
+            printf("----- Game iniciado! -----\n");
+            printf("Objetivo: Coletar todas as moedas\nCair na lava e sera seu fim\n");
         }
         return;
     }
@@ -352,13 +352,13 @@ void processInput(GLFWwindow* window) {
         if (coinsCollected == coinsTotal) {
             playState = WON;
             double elapsed = now - gameStartTime;
-            printf("Parabens, voce ganhou o jogo em %.1f segundos!\n", elapsed);
-            printf("Pressione R para reiniciar.\n\n");
+            printf("Muito bem, voce ganhou!\n", elapsed);
+            printf("Pressione R para reiniciar o game.\n\n");
         }
         if (worldMap[heroRow][heroCol].tileIndex == 3) {
             playState = GAMEOVER;
-            printf("Game over, voce pisou na lava!\n");
-            printf("Pressione R para reiniciar.\n\n");
+            printf("Decepcionante, voce pisou na lava!\n");
+            printf("Pressione R para reiniciar o Game.\n\n");
         }
     }
 }
