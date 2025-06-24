@@ -3,9 +3,9 @@
 # No other meaning or use of this file is supported.
 
 method=git
-command=C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/Dev/PGCCHIB/build/_deps/stb_image-subbuild/stb_image-populate-prefix/tmp/stb_image-populate-gitclone.cmake
-source_dir=C:/Dev/PGCCHIB/build/_deps/stb_image-src
-work_dir=C:/Dev/PGCCHIB/build/_deps
+command=C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/stb_image-subbuild/stb_image-populate-prefix/tmp/stb_image-populate-gitclone.cmake
+source_dir=C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/stb_image-src
+work_dir=C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps
 repository=https://github.com/nothings/stb.git
 remote=origin
 init_submodules=TRUE

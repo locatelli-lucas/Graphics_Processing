@@ -56,7 +56,7 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Dev\Tarefas_Processamento_Grafico\Graphics_Processing\build\_deps\glfw-src
+CMAKE_SOURCE_DIR = C:\Dev\Tarefas_Processamento_Grafico\Graphics_Processing
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = C:\Dev\Tarefas_Processamento_Grafico\Graphics_Processing\build
@@ -161,6 +161,84 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named ex1.cpp
+
+# Build rule for target.
+ex1.cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 ex1.cpp
+.PHONY : ex1.cpp
+
+# fast build rule for target.
+ex1.cpp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex1.cpp.dir\build.make CMakeFiles/ex1.cpp.dir/build
+.PHONY : ex1.cpp/fast
+
+#=============================================================================
+# Target rules for targets named ex2.cpp
+
+# Build rule for target.
+ex2.cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 ex2.cpp
+.PHONY : ex2.cpp
+
+# fast build rule for target.
+ex2.cpp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex2.cpp.dir\build.make CMakeFiles/ex2.cpp.dir/build
+.PHONY : ex2.cpp/fast
+
+#=============================================================================
+# Target rules for targets named ex3.cpp
+
+# Build rule for target.
+ex3.cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 ex3.cpp
+.PHONY : ex3.cpp
+
+# fast build rule for target.
+ex3.cpp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex3.cpp.dir\build.make CMakeFiles/ex3.cpp.dir/build
+.PHONY : ex3.cpp/fast
+
+#=============================================================================
+# Target rules for targets named JogoCores.cpp
+
+# Build rule for target.
+JogoCores.cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 JogoCores.cpp
+.PHONY : JogoCores.cpp
+
+# fast build rule for target.
+JogoCores.cpp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JogoCores.cpp.dir\build.make CMakeFiles/JogoCores.cpp.dir/build
+.PHONY : JogoCores.cpp/fast
+
+#=============================================================================
+# Target rules for targets named ObjetosTexturizados.cpp
+
+# Build rule for target.
+ObjetosTexturizados.cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 ObjetosTexturizados.cpp
+.PHONY : ObjetosTexturizados.cpp
+
+# fast build rule for target.
+ObjetosTexturizados.cpp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ObjetosTexturizados.cpp.dir\build.make CMakeFiles/ObjetosTexturizados.cpp.dir/build
+.PHONY : ObjetosTexturizados.cpp/fast
+
+#=============================================================================
+# Target rules for targets named gb.cpp
+
+# Build rule for target.
+gb.cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gb.cpp
+.PHONY : gb.cpp
+
+# fast build rule for target.
+gb.cpp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gb.cpp.dir\build.make CMakeFiles/gb.cpp.dir/build
+.PHONY : gb.cpp/fast
+
+#=============================================================================
 # Target rules for targets named uninstall
 
 # Build rule for target.
@@ -170,7 +248,7 @@ uninstall: cmake_check_build_system
 
 # fast build rule for target.
 uninstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\uninstall.dir\build.make CMakeFiles/uninstall.dir/build
+	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\CMakeFiles\uninstall.dir\build.make _deps/glfw-build/CMakeFiles/uninstall.dir/build
 .PHONY : uninstall/fast
 
 #=============================================================================
@@ -183,7 +261,7 @@ glfw: cmake_check_build_system
 
 # fast build rule for target.
 glfw/fast:
-	$(MAKE) $(MAKESILENT) -f src\CMakeFiles\glfw.dir\build.make src/CMakeFiles/glfw.dir/build
+	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\glfw.dir\build.make _deps/glfw-build/src/CMakeFiles/glfw.dir/build
 .PHONY : glfw/fast
 
 #=============================================================================
@@ -196,411 +274,204 @@ update_mappings: cmake_check_build_system
 
 # fast build rule for target.
 update_mappings/fast:
-	$(MAKE) $(MAKESILENT) -f src\CMakeFiles\update_mappings.dir\build.make src/CMakeFiles/update_mappings.dir/build
+	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\update_mappings.dir\build.make _deps/glfw-build/src/CMakeFiles/update_mappings.dir/build
 .PHONY : update_mappings/fast
 
 #=============================================================================
-# Target rules for targets named boing
+# Target rules for targets named glm
 
 # Build rule for target.
-boing: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 boing
-.PHONY : boing
+glm: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 glm
+.PHONY : glm
 
 # fast build rule for target.
-boing/fast:
-	$(MAKE) $(MAKESILENT) -f examples\CMakeFiles\boing.dir\build.make examples/CMakeFiles/boing.dir/build
-.PHONY : boing/fast
-
-#=============================================================================
-# Target rules for targets named gears
-
-# Build rule for target.
-gears: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gears
-.PHONY : gears
-
-# fast build rule for target.
-gears/fast:
-	$(MAKE) $(MAKESILENT) -f examples\CMakeFiles\gears.dir\build.make examples/CMakeFiles/gears.dir/build
-.PHONY : gears/fast
-
-#=============================================================================
-# Target rules for targets named heightmap
-
-# Build rule for target.
-heightmap: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 heightmap
-.PHONY : heightmap
-
-# fast build rule for target.
-heightmap/fast:
-	$(MAKE) $(MAKESILENT) -f examples\CMakeFiles\heightmap.dir\build.make examples/CMakeFiles/heightmap.dir/build
-.PHONY : heightmap/fast
-
-#=============================================================================
-# Target rules for targets named offscreen
-
-# Build rule for target.
-offscreen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 offscreen
-.PHONY : offscreen
-
-# fast build rule for target.
-offscreen/fast:
-	$(MAKE) $(MAKESILENT) -f examples\CMakeFiles\offscreen.dir\build.make examples/CMakeFiles/offscreen.dir/build
-.PHONY : offscreen/fast
-
-#=============================================================================
-# Target rules for targets named particles
-
-# Build rule for target.
-particles: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 particles
-.PHONY : particles
-
-# fast build rule for target.
-particles/fast:
-	$(MAKE) $(MAKESILENT) -f examples\CMakeFiles\particles.dir\build.make examples/CMakeFiles/particles.dir/build
-.PHONY : particles/fast
-
-#=============================================================================
-# Target rules for targets named sharing
-
-# Build rule for target.
-sharing: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 sharing
-.PHONY : sharing
-
-# fast build rule for target.
-sharing/fast:
-	$(MAKE) $(MAKESILENT) -f examples\CMakeFiles\sharing.dir\build.make examples/CMakeFiles/sharing.dir/build
-.PHONY : sharing/fast
-
-#=============================================================================
-# Target rules for targets named splitview
-
-# Build rule for target.
-splitview: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 splitview
-.PHONY : splitview
-
-# fast build rule for target.
-splitview/fast:
-	$(MAKE) $(MAKESILENT) -f examples\CMakeFiles\splitview.dir\build.make examples/CMakeFiles/splitview.dir/build
-.PHONY : splitview/fast
-
-#=============================================================================
-# Target rules for targets named triangle-opengl
-
-# Build rule for target.
-triangle-opengl: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 triangle-opengl
-.PHONY : triangle-opengl
-
-# fast build rule for target.
-triangle-opengl/fast:
-	$(MAKE) $(MAKESILENT) -f examples\CMakeFiles\triangle-opengl.dir\build.make examples/CMakeFiles/triangle-opengl.dir/build
-.PHONY : triangle-opengl/fast
-
-#=============================================================================
-# Target rules for targets named triangle-opengles
-
-# Build rule for target.
-triangle-opengles: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 triangle-opengles
-.PHONY : triangle-opengles
-
-# fast build rule for target.
-triangle-opengles/fast:
-	$(MAKE) $(MAKESILENT) -f examples\CMakeFiles\triangle-opengles.dir\build.make examples/CMakeFiles/triangle-opengles.dir/build
-.PHONY : triangle-opengles/fast
-
-#=============================================================================
-# Target rules for targets named wave
-
-# Build rule for target.
-wave: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 wave
-.PHONY : wave
-
-# fast build rule for target.
-wave/fast:
-	$(MAKE) $(MAKESILENT) -f examples\CMakeFiles\wave.dir\build.make examples/CMakeFiles/wave.dir/build
-.PHONY : wave/fast
-
-#=============================================================================
-# Target rules for targets named windows
-
-# Build rule for target.
-windows: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 windows
-.PHONY : windows
-
-# fast build rule for target.
-windows/fast:
-	$(MAKE) $(MAKESILENT) -f examples\CMakeFiles\windows.dir\build.make examples/CMakeFiles/windows.dir/build
-.PHONY : windows/fast
-
-#=============================================================================
-# Target rules for targets named allocator
-
-# Build rule for target.
-allocator: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 allocator
-.PHONY : allocator
-
-# fast build rule for target.
-allocator/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\allocator.dir\build.make tests/CMakeFiles/allocator.dir/build
-.PHONY : allocator/fast
-
-#=============================================================================
-# Target rules for targets named clipboard
-
-# Build rule for target.
-clipboard: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 clipboard
-.PHONY : clipboard
-
-# fast build rule for target.
-clipboard/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\clipboard.dir\build.make tests/CMakeFiles/clipboard.dir/build
-.PHONY : clipboard/fast
-
-#=============================================================================
-# Target rules for targets named events
-
-# Build rule for target.
-events: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 events
-.PHONY : events
-
-# fast build rule for target.
-events/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\events.dir\build.make tests/CMakeFiles/events.dir/build
-.PHONY : events/fast
-
-#=============================================================================
-# Target rules for targets named msaa
-
-# Build rule for target.
-msaa: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 msaa
-.PHONY : msaa
-
-# fast build rule for target.
-msaa/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\msaa.dir\build.make tests/CMakeFiles/msaa.dir/build
-.PHONY : msaa/fast
-
-#=============================================================================
-# Target rules for targets named glfwinfo
-
-# Build rule for target.
-glfwinfo: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 glfwinfo
-.PHONY : glfwinfo
-
-# fast build rule for target.
-glfwinfo/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\glfwinfo.dir\build.make tests/CMakeFiles/glfwinfo.dir/build
-.PHONY : glfwinfo/fast
-
-#=============================================================================
-# Target rules for targets named iconify
-
-# Build rule for target.
-iconify: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 iconify
-.PHONY : iconify
-
-# fast build rule for target.
-iconify/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\iconify.dir\build.make tests/CMakeFiles/iconify.dir/build
-.PHONY : iconify/fast
-
-#=============================================================================
-# Target rules for targets named monitors
-
-# Build rule for target.
-monitors: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 monitors
-.PHONY : monitors
-
-# fast build rule for target.
-monitors/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\monitors.dir\build.make tests/CMakeFiles/monitors.dir/build
-.PHONY : monitors/fast
-
-#=============================================================================
-# Target rules for targets named reopen
-
-# Build rule for target.
-reopen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 reopen
-.PHONY : reopen
-
-# fast build rule for target.
-reopen/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\reopen.dir\build.make tests/CMakeFiles/reopen.dir/build
-.PHONY : reopen/fast
-
-#=============================================================================
-# Target rules for targets named cursor
-
-# Build rule for target.
-cursor: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 cursor
-.PHONY : cursor
-
-# fast build rule for target.
-cursor/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\cursor.dir\build.make tests/CMakeFiles/cursor.dir/build
-.PHONY : cursor/fast
-
-#=============================================================================
-# Target rules for targets named empty
-
-# Build rule for target.
-empty: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 empty
-.PHONY : empty
-
-# fast build rule for target.
-empty/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\empty.dir\build.make tests/CMakeFiles/empty.dir/build
-.PHONY : empty/fast
-
-#=============================================================================
-# Target rules for targets named gamma
-
-# Build rule for target.
-gamma: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gamma
-.PHONY : gamma
-
-# fast build rule for target.
-gamma/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\gamma.dir\build.make tests/CMakeFiles/gamma.dir/build
-.PHONY : gamma/fast
-
-#=============================================================================
-# Target rules for targets named icon
-
-# Build rule for target.
-icon: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 icon
-.PHONY : icon
-
-# fast build rule for target.
-icon/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\icon.dir\build.make tests/CMakeFiles/icon.dir/build
-.PHONY : icon/fast
-
-#=============================================================================
-# Target rules for targets named inputlag
-
-# Build rule for target.
-inputlag: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 inputlag
-.PHONY : inputlag
-
-# fast build rule for target.
-inputlag/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\inputlag.dir\build.make tests/CMakeFiles/inputlag.dir/build
-.PHONY : inputlag/fast
-
-#=============================================================================
-# Target rules for targets named joysticks
-
-# Build rule for target.
-joysticks: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 joysticks
-.PHONY : joysticks
-
-# fast build rule for target.
-joysticks/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\joysticks.dir\build.make tests/CMakeFiles/joysticks.dir/build
-.PHONY : joysticks/fast
-
-#=============================================================================
-# Target rules for targets named tearing
-
-# Build rule for target.
-tearing: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 tearing
-.PHONY : tearing
-
-# fast build rule for target.
-tearing/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\tearing.dir\build.make tests/CMakeFiles/tearing.dir/build
-.PHONY : tearing/fast
-
-#=============================================================================
-# Target rules for targets named threads
-
-# Build rule for target.
-threads: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 threads
-.PHONY : threads
-
-# fast build rule for target.
-threads/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\threads.dir\build.make tests/CMakeFiles/threads.dir/build
-.PHONY : threads/fast
-
-#=============================================================================
-# Target rules for targets named timeout
-
-# Build rule for target.
-timeout: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 timeout
-.PHONY : timeout
-
-# fast build rule for target.
-timeout/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\timeout.dir\build.make tests/CMakeFiles/timeout.dir/build
-.PHONY : timeout/fast
-
-#=============================================================================
-# Target rules for targets named title
-
-# Build rule for target.
-title: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 title
-.PHONY : title
-
-# fast build rule for target.
-title/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\title.dir\build.make tests/CMakeFiles/title.dir/build
-.PHONY : title/fast
-
-#=============================================================================
-# Target rules for targets named triangle-vulkan
-
-# Build rule for target.
-triangle-vulkan: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 triangle-vulkan
-.PHONY : triangle-vulkan
-
-# fast build rule for target.
-triangle-vulkan/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\triangle-vulkan.dir\build.make tests/CMakeFiles/triangle-vulkan.dir/build
-.PHONY : triangle-vulkan/fast
-
-#=============================================================================
-# Target rules for targets named window
-
-# Build rule for target.
-window: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 window
-.PHONY : window
-
-# fast build rule for target.
-window/fast:
-	$(MAKE) $(MAKESILENT) -f tests\CMakeFiles\window.dir\build.make tests/CMakeFiles/window.dir/build
-.PHONY : window/fast
+glm/fast:
+	$(MAKE) $(MAKESILENT) -f _deps\glm-build\glm\CMakeFiles\glm.dir\build.make _deps/glm-build/glm/CMakeFiles/glm.dir/build
+.PHONY : glm/fast
+
+common/glad.obj: common/glad.c.obj
+.PHONY : common/glad.obj
+
+# target to build an object file
+common/glad.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex1.cpp.dir\build.make CMakeFiles/ex1.cpp.dir/common/glad.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex2.cpp.dir\build.make CMakeFiles/ex2.cpp.dir/common/glad.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex3.cpp.dir\build.make CMakeFiles/ex3.cpp.dir/common/glad.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JogoCores.cpp.dir\build.make CMakeFiles/JogoCores.cpp.dir/common/glad.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ObjetosTexturizados.cpp.dir\build.make CMakeFiles/ObjetosTexturizados.cpp.dir/common/glad.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gb.cpp.dir\build.make CMakeFiles/gb.cpp.dir/common/glad.c.obj
+.PHONY : common/glad.c.obj
+
+common/glad.i: common/glad.c.i
+.PHONY : common/glad.i
+
+# target to preprocess a source file
+common/glad.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex1.cpp.dir\build.make CMakeFiles/ex1.cpp.dir/common/glad.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex2.cpp.dir\build.make CMakeFiles/ex2.cpp.dir/common/glad.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex3.cpp.dir\build.make CMakeFiles/ex3.cpp.dir/common/glad.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JogoCores.cpp.dir\build.make CMakeFiles/JogoCores.cpp.dir/common/glad.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ObjetosTexturizados.cpp.dir\build.make CMakeFiles/ObjetosTexturizados.cpp.dir/common/glad.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gb.cpp.dir\build.make CMakeFiles/gb.cpp.dir/common/glad.c.i
+.PHONY : common/glad.c.i
+
+common/glad.s: common/glad.c.s
+.PHONY : common/glad.s
+
+# target to generate assembly for a file
+common/glad.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex1.cpp.dir\build.make CMakeFiles/ex1.cpp.dir/common/glad.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex2.cpp.dir\build.make CMakeFiles/ex2.cpp.dir/common/glad.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex3.cpp.dir\build.make CMakeFiles/ex3.cpp.dir/common/glad.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JogoCores.cpp.dir\build.make CMakeFiles/JogoCores.cpp.dir/common/glad.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ObjetosTexturizados.cpp.dir\build.make CMakeFiles/ObjetosTexturizados.cpp.dir/common/glad.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gb.cpp.dir\build.make CMakeFiles/gb.cpp.dir/common/glad.c.s
+.PHONY : common/glad.c.s
+
+src/GB/gb.obj: src/GB/gb.cpp.obj
+.PHONY : src/GB/gb.obj
+
+# target to build an object file
+src/GB/gb.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gb.cpp.dir\build.make CMakeFiles/gb.cpp.dir/src/GB/gb.cpp.obj
+.PHONY : src/GB/gb.cpp.obj
+
+src/GB/gb.i: src/GB/gb.cpp.i
+.PHONY : src/GB/gb.i
+
+# target to preprocess a source file
+src/GB/gb.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gb.cpp.dir\build.make CMakeFiles/gb.cpp.dir/src/GB/gb.cpp.i
+.PHONY : src/GB/gb.cpp.i
+
+src/GB/gb.s: src/GB/gb.cpp.s
+.PHONY : src/GB/gb.s
+
+# target to generate assembly for a file
+src/GB/gb.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\gb.cpp.dir\build.make CMakeFiles/gb.cpp.dir/src/GB/gb.cpp.s
+.PHONY : src/GB/gb.cpp.s
+
+src/M2/ex1/ex1.obj: src/M2/ex1/ex1.cpp.obj
+.PHONY : src/M2/ex1/ex1.obj
+
+# target to build an object file
+src/M2/ex1/ex1.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex1.cpp.dir\build.make CMakeFiles/ex1.cpp.dir/src/M2/ex1/ex1.cpp.obj
+.PHONY : src/M2/ex1/ex1.cpp.obj
+
+src/M2/ex1/ex1.i: src/M2/ex1/ex1.cpp.i
+.PHONY : src/M2/ex1/ex1.i
+
+# target to preprocess a source file
+src/M2/ex1/ex1.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex1.cpp.dir\build.make CMakeFiles/ex1.cpp.dir/src/M2/ex1/ex1.cpp.i
+.PHONY : src/M2/ex1/ex1.cpp.i
+
+src/M2/ex1/ex1.s: src/M2/ex1/ex1.cpp.s
+.PHONY : src/M2/ex1/ex1.s
+
+# target to generate assembly for a file
+src/M2/ex1/ex1.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex1.cpp.dir\build.make CMakeFiles/ex1.cpp.dir/src/M2/ex1/ex1.cpp.s
+.PHONY : src/M2/ex1/ex1.cpp.s
+
+src/M2/ex2/ex2.obj: src/M2/ex2/ex2.cpp.obj
+.PHONY : src/M2/ex2/ex2.obj
+
+# target to build an object file
+src/M2/ex2/ex2.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex2.cpp.dir\build.make CMakeFiles/ex2.cpp.dir/src/M2/ex2/ex2.cpp.obj
+.PHONY : src/M2/ex2/ex2.cpp.obj
+
+src/M2/ex2/ex2.i: src/M2/ex2/ex2.cpp.i
+.PHONY : src/M2/ex2/ex2.i
+
+# target to preprocess a source file
+src/M2/ex2/ex2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex2.cpp.dir\build.make CMakeFiles/ex2.cpp.dir/src/M2/ex2/ex2.cpp.i
+.PHONY : src/M2/ex2/ex2.cpp.i
+
+src/M2/ex2/ex2.s: src/M2/ex2/ex2.cpp.s
+.PHONY : src/M2/ex2/ex2.s
+
+# target to generate assembly for a file
+src/M2/ex2/ex2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex2.cpp.dir\build.make CMakeFiles/ex2.cpp.dir/src/M2/ex2/ex2.cpp.s
+.PHONY : src/M2/ex2/ex2.cpp.s
+
+src/M2/ex3/ex3.obj: src/M2/ex3/ex3.cpp.obj
+.PHONY : src/M2/ex3/ex3.obj
+
+# target to build an object file
+src/M2/ex3/ex3.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex3.cpp.dir\build.make CMakeFiles/ex3.cpp.dir/src/M2/ex3/ex3.cpp.obj
+.PHONY : src/M2/ex3/ex3.cpp.obj
+
+src/M2/ex3/ex3.i: src/M2/ex3/ex3.cpp.i
+.PHONY : src/M2/ex3/ex3.i
+
+# target to preprocess a source file
+src/M2/ex3/ex3.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex3.cpp.dir\build.make CMakeFiles/ex3.cpp.dir/src/M2/ex3/ex3.cpp.i
+.PHONY : src/M2/ex3/ex3.cpp.i
+
+src/M2/ex3/ex3.s: src/M2/ex3/ex3.cpp.s
+.PHONY : src/M2/ex3/ex3.s
+
+# target to generate assembly for a file
+src/M2/ex3/ex3.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ex3.cpp.dir\build.make CMakeFiles/ex3.cpp.dir/src/M2/ex3/ex3.cpp.s
+.PHONY : src/M2/ex3/ex3.cpp.s
+
+src/M3/JogoCores.obj: src/M3/JogoCores.cpp.obj
+.PHONY : src/M3/JogoCores.obj
+
+# target to build an object file
+src/M3/JogoCores.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JogoCores.cpp.dir\build.make CMakeFiles/JogoCores.cpp.dir/src/M3/JogoCores.cpp.obj
+.PHONY : src/M3/JogoCores.cpp.obj
+
+src/M3/JogoCores.i: src/M3/JogoCores.cpp.i
+.PHONY : src/M3/JogoCores.i
+
+# target to preprocess a source file
+src/M3/JogoCores.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JogoCores.cpp.dir\build.make CMakeFiles/JogoCores.cpp.dir/src/M3/JogoCores.cpp.i
+.PHONY : src/M3/JogoCores.cpp.i
+
+src/M3/JogoCores.s: src/M3/JogoCores.cpp.s
+.PHONY : src/M3/JogoCores.s
+
+# target to generate assembly for a file
+src/M3/JogoCores.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JogoCores.cpp.dir\build.make CMakeFiles/JogoCores.cpp.dir/src/M3/JogoCores.cpp.s
+.PHONY : src/M3/JogoCores.cpp.s
+
+src/M4/ObjetosTexturizados.obj: src/M4/ObjetosTexturizados.cpp.obj
+.PHONY : src/M4/ObjetosTexturizados.obj
+
+# target to build an object file
+src/M4/ObjetosTexturizados.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ObjetosTexturizados.cpp.dir\build.make CMakeFiles/ObjetosTexturizados.cpp.dir/src/M4/ObjetosTexturizados.cpp.obj
+.PHONY : src/M4/ObjetosTexturizados.cpp.obj
+
+src/M4/ObjetosTexturizados.i: src/M4/ObjetosTexturizados.cpp.i
+.PHONY : src/M4/ObjetosTexturizados.i
+
+# target to preprocess a source file
+src/M4/ObjetosTexturizados.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ObjetosTexturizados.cpp.dir\build.make CMakeFiles/ObjetosTexturizados.cpp.dir/src/M4/ObjetosTexturizados.cpp.i
+.PHONY : src/M4/ObjetosTexturizados.cpp.i
+
+src/M4/ObjetosTexturizados.s: src/M4/ObjetosTexturizados.cpp.s
+.PHONY : src/M4/ObjetosTexturizados.s
+
+# target to generate assembly for a file
+src/M4/ObjetosTexturizados.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ObjetosTexturizados.cpp.dir\build.make CMakeFiles/ObjetosTexturizados.cpp.dir/src/M4/ObjetosTexturizados.cpp.s
+.PHONY : src/M4/ObjetosTexturizados.cpp.s
 
 # Help Target
 help:
@@ -616,38 +487,35 @@ help:
 	@echo ... rebuild_cache
 	@echo ... uninstall
 	@echo ... update_mappings
-	@echo ... allocator
-	@echo ... boing
-	@echo ... clipboard
-	@echo ... cursor
-	@echo ... empty
-	@echo ... events
-	@echo ... gamma
-	@echo ... gears
+	@echo ... JogoCores.cpp
+	@echo ... ObjetosTexturizados.cpp
+	@echo ... ex1.cpp
+	@echo ... ex2.cpp
+	@echo ... ex3.cpp
+	@echo ... gb.cpp
 	@echo ... glfw
-	@echo ... glfwinfo
-	@echo ... heightmap
-	@echo ... icon
-	@echo ... iconify
-	@echo ... inputlag
-	@echo ... joysticks
-	@echo ... monitors
-	@echo ... msaa
-	@echo ... offscreen
-	@echo ... particles
-	@echo ... reopen
-	@echo ... sharing
-	@echo ... splitview
-	@echo ... tearing
-	@echo ... threads
-	@echo ... timeout
-	@echo ... title
-	@echo ... triangle-opengl
-	@echo ... triangle-opengles
-	@echo ... triangle-vulkan
-	@echo ... wave
-	@echo ... window
-	@echo ... windows
+	@echo ... glm
+	@echo ... common/glad.obj
+	@echo ... common/glad.i
+	@echo ... common/glad.s
+	@echo ... src/GB/gb.obj
+	@echo ... src/GB/gb.i
+	@echo ... src/GB/gb.s
+	@echo ... src/M2/ex1/ex1.obj
+	@echo ... src/M2/ex1/ex1.i
+	@echo ... src/M2/ex1/ex1.s
+	@echo ... src/M2/ex2/ex2.obj
+	@echo ... src/M2/ex2/ex2.i
+	@echo ... src/M2/ex2/ex2.s
+	@echo ... src/M2/ex3/ex3.obj
+	@echo ... src/M2/ex3/ex3.i
+	@echo ... src/M2/ex3/ex3.s
+	@echo ... src/M3/JogoCores.obj
+	@echo ... src/M3/JogoCores.i
+	@echo ... src/M3/JogoCores.s
+	@echo ... src/M4/ObjetosTexturizados.obj
+	@echo ... src/M4/ObjetosTexturizados.i
+	@echo ... src/M4/ObjetosTexturizados.s
 .PHONY : help
 
 

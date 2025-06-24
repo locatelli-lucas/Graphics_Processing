@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\JogoCores.cpp.dir/objects.a
+C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\JogoCores.cpp.dir/objects.a @CMakeFiles\JogoCores.cpp.dir\objects1.rsp
+C:\msys64\ucrt64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\JogoCores.cpp.dir/objects.a -Wl,--no-whole-archive -o JogoCores.cpp.exe -Wl,--out-implib,libJogoCores.cpp.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\JogoCores.cpp.dir\linkLibs.rsp

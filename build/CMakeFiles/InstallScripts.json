@@ -2,10 +2,11 @@
 	"InstallScripts" : 
 	[
 		"C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/cmake_install.cmake",
-		"C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/src/cmake_install.cmake",
-		"C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/examples/cmake_install.cmake",
-		"C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/tests/cmake_install.cmake",
-		"C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/docs/cmake_install.cmake"
+		"C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/glfw-build/cmake_install.cmake",
+		"C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/glfw-build/src/cmake_install.cmake",
+		"C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/glfw-build/docs/cmake_install.cmake",
+		"C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/glm-build/cmake_install.cmake",
+		"C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/glm-build/glm/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

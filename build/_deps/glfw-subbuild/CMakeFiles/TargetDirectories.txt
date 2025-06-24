@@ -1,3 +1,3 @@
-C:/Dev/PGCCHIB/build/_deps/glfw-subbuild/CMakeFiles/glfw-populate.dir
-C:/Dev/PGCCHIB/build/_deps/glfw-subbuild/CMakeFiles/edit_cache.dir
-C:/Dev/PGCCHIB/build/_deps/glfw-subbuild/CMakeFiles/rebuild_cache.dir
+C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/glfw-subbuild/CMakeFiles/glfw-populate.dir
+C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/glfw-subbuild/CMakeFiles/edit_cache.dir
+C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/glfw-subbuild/CMakeFiles/rebuild_cache.dir

@@ -61,3 +61,27 @@ Principais Funcionalidades:
 - Exemplo de matriz de modelo para posicionamento e escala dos sprites.
 
 Localização: src/M4/ObjetosTexturizados.cpp
+
+<h3>gb.cpp</h3>
+
+Descrição: Um jogo de tilemap isométrico onde o jogador deve coletar todas as moedas sem pisar na lava. O mapa é carregado de um arquivo texto, e cada tile pode conter moedas, água (intransponível), chão, ou lava (game over ao pisar). O personagem é animado e há animação para as moedas.
+
+Principais Funcionalidades:
+- Leitura de mapas customizados de arquivo.
+- Tiles animados e sprites animados para o personagem.
+- Sistema de coleta de moedas e detecção de vitória/derrota.
+- Tiles de água bloqueiam o movimento.
+- Lava não pode limitar todo o mapa, garantindo sempre caminhos possíveis.
+- Reinício do jogo com a tecla R.
+
+Como executar:
+1. Compile o projeto usando CMake conforme instruções do repositório.
+2. Execute o binário a partir da raiz do projeto:
+   ```
+   build\gb.cpp.exe
+   ```
+3. Certifique-se de que a pasta `assets` está na raiz, com todos os arquivos necessários.
+
+Localização: src/GB/gb.cpp
+
+Alunos: Lucas Locatelli, Bruno Gerling

@@ -1,9 +1,9 @@
 
-if (NOT EXISTS "C:/Dev/PGCCHIB/build/_deps/glfw-build/install_manifest.txt")
-    message(FATAL_ERROR "Cannot find install manifest: \"C:/Dev/PGCCHIB/build/_deps/glfw-build/install_manifest.txt\"")
+if (NOT EXISTS "C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/glfw-build/install_manifest.txt")
+    message(FATAL_ERROR "Cannot find install manifest: \"C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/glfw-build/install_manifest.txt\"")
 endif()
 
-file(READ "C:/Dev/PGCCHIB/build/_deps/glfw-build/install_manifest.txt" files)
+file(READ "C:/Dev/Tarefas_Processamento_Grafico/Graphics_Processing/build/_deps/glfw-build/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 
 foreach (file ${files})
